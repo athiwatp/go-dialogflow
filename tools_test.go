@@ -32,14 +32,14 @@ func TestNewContext(testing *testing.T) {
 }
 
 func TestFindContext(testing *testing.T) {
-	ctx := FindContext(session, "testing", contexts)
+	ctx := FindContext("testing", contexts)
 	if ctx == nil {
 		testing.Fatal("invalid context found")
 	}
 }
 
 func TestFindParameter(testing *testing.T) {
-	ctx := FindContext(session, "testing", contexts)
+	ctx := FindContext("testing", contexts)
 	param := FindParameter("name", ctx.Parameters)
 	if param == nil {
 		testing.Fatal("invalid param found")

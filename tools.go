@@ -2,11 +2,12 @@ package tools
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/golang/protobuf/jsonpb"
 
 	_struct "github.com/golang/protobuf/ptypes/struct"
-	"google.golang.org/genproto/googleapis/cloud/dialogflow/v2"
+	dialogflow "google.golang.org/genproto/googleapis/cloud/dialogflow/v2"
 )
 
 // NewTextMessageCollection Creates new message collection
@@ -25,11 +26,12 @@ func NewTextMessageCollection(messages []string) []*dialogflow.Intent_Message {
 }
 
 // FindContext Finds context on given collection
-func FindContext(session string, name string, contexts []*dialogflow.Context) *dialogflow.Context {
+func FindContext(name string, contexts []*dialogflow.Context) *dialogflow.Context {
 	var result *dialogflow.Context
-	fullname := session + "/contexts/" + name
 	for _, context := range contexts {
-		if context.Name == fullname {
+		r := strings.Split(context.Name, "/")
+		foundName := r[len(r)-1]
+		if foundName == name {
 			result = context
 			break
 		}
